@@ -414,13 +414,13 @@
     return scoped ? scopedCSS(tag, style) : style
   }
 
-  var TYPE_ATTR = /\stype\s*=\s*(?:['"]([^'"]+)['"]|(\S+))/i
+  var TYPE_ATTR = /\stype\s*=\s*(?:('|")(.+)\1|(\S+))/i
 
   function getType(str) {
 
     if (str) {
       var match = str.match(TYPE_ATTR)
-      str = match && (match[1] || match[2])
+      str = match && (match[2] || match[3])
     }
     return str ? str.replace('text/', '') : ''
   }
@@ -432,7 +432,7 @@
         re = _regEx(TYPE_ATTR.source.replace('type', name), 'i'),
         match = str && str.match(re)
       /* istanbul ignore next */
-      str = match && (match[1] || match[2])
+      str = match && (match[2] || match[3])
     }
     return str || ''
   }
@@ -441,7 +441,7 @@
     var opts = getAttr(attrs, 'options')
 
     /* istanbul ignore next */
-    if (opts) opts = JSON.parse(parserOpts)
+    if (opts) opts = JSON.parse(opts)
     return opts
   }
 

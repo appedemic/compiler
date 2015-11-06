@@ -160,6 +160,14 @@ describe('JavaScript parsers', function () {
     }
   })
 
+
+/*  it('custom script options', function () {
+    if (have('es6')) {
+      testParser('test-attr', { type: 'es6', expr: true })
+    }
+  })
+*/
+
   // test.babel-core.tag
   it('css.babel-core as custom parser (babel-core 5.8)', function () {
     if (have('babelcore', 'babel-core')) {
@@ -208,6 +216,13 @@ describe('Style parsers', function () {
   it('scss, indented 2, margin 0', function () {
     if (have('scss', 'node-sass')) {
       testParser('scss', {})
+    }
+  })
+
+  // testing the options attribute on the style tag
+  it('custom style options', function () {
+    if (have('sass', 'node-sass')) {
+      testParser('sass.options', {})
     }
   })
 
