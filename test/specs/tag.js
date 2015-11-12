@@ -111,4 +111,12 @@ describe('Compile tags', function() {
     testFile('so-input')
   })
 
+  it('the separate option give access to the compiled parts', function () {
+    var parts = compiler.compile(cat(fixtures, 'treeview.tag'), {separate: true})
+    //console.log(JSON.stringify(parts))
+    expect(parts.length).to.be(2)
+    //var e1 = '{"tagName":"treeview","html":"<ul id=\"treeview\"> <li> <treeitem data=\"{treedata}\"></treeitem> </li> </ul>","css":"","js":"  this.treedata = {\n    name: 'My Tree',\n    nodes: [\n      { name: 'hello' },\n      { name: 'wat' },\n      {\n        name: 'child folder',\n        nodes: [\n          {\n            name: 'child folder',\n            nodes: [\n              { name: 'hello' },\n              { name: 'wat' }\n            ]\n          },\n          { name: 'hello' },\n          { name: 'wat' },\n          {\n            name: 'child folder',\n            nodes: [\n              { name: 'hello' },\n              { name: 'wat' }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n"}'
+    //var e2 = '{"tagName":"treeitem","html":"<div class=\"{bold: isFolder()}\" onclick=\"{toggle}\" ondblclick=\"{changeType}\"> {name} <span if=\"{isFolder()}\">[{open ? '-' : '+'}]</span> </div> <ul if=\"{isFolder()}\" show=\"{isFolder() && open}\"> <li each=\"{child, i in nodes}\"> <treeitem data=\"{child}\"></treeitem> </li> <li onclick=\"{addChild}\">+</li> </ul>","css":"","js":"  var self = this\n  self.name = opts.data.name\n  self.nodes = opts.data.nodes\n\n  this.isFolder = function() {\n    return self.nodes && self.nodes.length\n  }.bind(this)\n\n  this.toggle = function(e) {\n    self.open = !self.open\n  }.bind(this)\n\n  this.changeType = function(e) {\n    if (!self.isFolder()) {\n      self.nodes = []\n      self.addChild()\n      self.open = true\n    }\n  }.bind(this)\n\n  this.addChild = function(e) {\n    self.nodes.push({\n      name: 'new stuff'\n    })\n  }.bind(this)\n"}'
+  })
+
 })

@@ -120,11 +120,7 @@ var compile = (function () {
       c = ', ',
       s = '}' + (pcex.length ? ', ' + q(_bp[8]) : '') + ');'
 
-    if (/\S/.test(js)) {
-      js = js.replace(/\n{3,}/g, '\n\n')
-      if (js.slice(-1) !== '\n') s = '\n' + s
-    }
-    else js = ''
+    if (js && js.slice(-1) !== '\n') s = '\n' + s
 
     return 'riot.tag2(' + q(name) + c + q(html) + c + q(css) + c + q(attrs) +
            ', function(opts) {\n' + js + s
@@ -421,7 +417,7 @@ var compile = (function () {
     SCRIPT = _regEx(STYLE.source.replace(/tyle/g, 'cript'), 'gi')
 
   function compile(src, opts, url) {
-    var label
+    var label, parts = []
 
     if (!opts) opts = {}
 
@@ -432,7 +428,7 @@ var compile = (function () {
 
     label = url ? '//src: ' + url + '\n' : ''
 
-    return label + src
+    src = label + src
       .replace(/\r\n?/g, '\n')
       .replace(CUST_TAG, function (_, tagName, attribs, body, body2) {
 
@@ -479,8 +475,23 @@ var compile = (function () {
           }
         }
 
-        return mktag(tagName, html, styles, attribs, jscode, pcex)
+        jscode = /\S/.test(jscode) ? jscode.replace(/\n{3,}/g, '\n\n') : ''
+
+        if (opts.separate) {
+            parts.push({
+              tagName: tagName,
+              html: html,
+              css: styles,
+              attribs: attribs,
+              js: jscode
+            })
+            return ''
+        }
+        else
+          return mktag(tagName, html, styles, attribs, jscode, pcex)
       })
+
+    return opts.separate ? parts : src
   }
 
   return compile
