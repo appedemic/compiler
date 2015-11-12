@@ -111,8 +111,8 @@ describe('Compile tags', function() {
     testFile('so-input')
   })
 
-  it('the separate option give access to the compiled parts', function () {
-    var parts = compiler.compile(cat(fixtures, 'treeview.tag'), {separate: true})
+  it('the `entities` option give access to the compiled parts', function () {
+    var parts = compiler.compile(cat(fixtures, 'treeview.tag'), {entities: true})
     //console.log(JSON.stringify(parts))
     expect(parts.length).to.be(2)
     //var e1 = '{"tagName":"treeview","html":"<ul id=\"treeview\"> <li> <treeitem data=\"{treedata}\"></treeitem> </li> </ul>","css":"","js":"  this.treedata = {\n    name: 'My Tree',\n    nodes: [\n      { name: 'hello' },\n      { name: 'wat' },\n      {\n        name: 'child folder',\n        nodes: [\n          {\n            name: 'child folder',\n            nodes: [\n              { name: 'hello' },\n              { name: 'wat' }\n            ]\n          },\n          { name: 'hello' },\n          { name: 'wat' },\n          {\n            name: 'child folder',\n            nodes: [\n              { name: 'hello' },\n              { name: 'wat' }\n            ]\n          }\n        ]\n      }\n    ]\n  }\n"}'

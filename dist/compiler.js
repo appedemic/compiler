@@ -556,7 +556,7 @@
 
           jscode = /\S/.test(jscode) ? jscode.replace(/\n{3,}/g, '\n\n') : ''
 
-          if (opts.separate) {
+          if (opts.entities) {
               parts.push({
                 tagName: tagName,
                 html: html,
@@ -570,7 +570,7 @@
             return mktag(tagName, html, styles, attribs, jscode, pcex)
         })
 
-      return opts.separate ? parts : src
+      return opts.entities ? parts : src
     }
 
   return {
